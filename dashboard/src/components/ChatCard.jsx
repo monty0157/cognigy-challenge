@@ -19,7 +19,6 @@ const ChatCard = function ChatCard({ sendMessage, setMessage, message }) {
         <Input
           placeholder="Send message"
           className="width__75"
-          id="chat"
           value={message}
           onChange={(e) => setMessage(e.target.value)}
         />
