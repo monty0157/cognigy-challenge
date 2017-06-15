@@ -5,9 +5,12 @@ import {
   Input,
   Row,
 } from 'antd';
+import { compose, withHandlers } from 'recompose';
+import io from 'socket.io-client';
+const socket = io()
 
-const ChatCard = function ChatCard() {
-
+const ChatCard = function ChatCard({ sendMessage }) {
+  const text = "test"
   return(
     <Card
       title="Chat with this amazing bot"
@@ -21,6 +24,7 @@ const ChatCard = function ChatCard() {
         <Button
           type="primary"
           className="ml3"
+          onClick={(e) => sendMessage(e, text)}
         >
           Send
         </Button>
@@ -29,4 +33,13 @@ const ChatCard = function ChatCard() {
   )
 }
 
-export default ChatCard;
+const ChatCardContainer = compose(
+  withHandlers({
+    sendMessage: () => (e, text) => {
+      e.preventDefault();
+      socket.emit('chat message', text)
+    }
+  })
+)(ChatCard)
+
+export default ChatCardContainer;
