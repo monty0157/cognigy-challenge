@@ -5,12 +5,11 @@ import {
   Input,
   Row,
 } from 'antd';
-import { compose, withHandlers } from 'recompose';
+import { compose, withHandlers, withState } from 'recompose';
 import io from 'socket.io-client';
 const socket = io()
 
-const ChatCard = function ChatCard({ sendMessage }) {
-  const text = "test"
+const ChatCard = function ChatCard({ sendMessage, setMessage, message }) {
   return(
     <Card
       title="Chat with this amazing bot"
@@ -20,11 +19,14 @@ const ChatCard = function ChatCard({ sendMessage }) {
         <Input
           placeholder="Send message"
           className="width__75"
+          id="chat"
+          value={message}
+          onChange={(e) => setMessage(e.target.value)}
         />
         <Button
           type="primary"
           className="ml3"
-          onClick={(e) => sendMessage(e, text)}
+          onClick={(e) => sendMessage(e)}
         >
           Send
         </Button>
@@ -34,10 +36,13 @@ const ChatCard = function ChatCard({ sendMessage }) {
 }
 
 const ChatCardContainer = compose(
+  withState('message', 'setMessage', ''),
   withHandlers({
-    sendMessage: () => (e, text) => {
+    sendMessage: ({ message, setMessage }) => (e) => {
       e.preventDefault();
-      socket.emit('chat message', text)
+      console.log(message)
+      socket.emit('chat message', message)
+      setMessage('');
     }
   })
 )(ChatCard)
