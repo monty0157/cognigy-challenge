@@ -10,14 +10,16 @@ const PORT = process.env.PORT || 3001;
 
 app.use(express.static(path.resolve(__dirname, './', 'build')));
 
-app.get('/', (req, res) => {
+app.get('*', (req, res) => {
   res.sendFile(path.resolve(__dirname, './', 'build', 'index.html'));
 });
 
 io.on('connection', (socket) => {
   socket.on('chat message', (msg) => {
-      console.log('message: ' + msg);
-    });});
+    console.log(msg)
+    io.sockets.emit('chat message', msg);
+  })
+});
 
 http.listen(PORT, () => {
   console.log(`listening on *:${PORT}`);

@@ -1,6 +1,6 @@
 import React from 'react';
 import Wrapper from '../components/Wrapper';
-import ChatCard from '../components/ChatCard';
+import ChatCard from '../components/chat/ChatCard';
 
 const MainLayout = function MainLayout() {
 
