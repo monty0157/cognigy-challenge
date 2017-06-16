@@ -15,9 +15,10 @@ const MainLayout = function MainLayout({ message, dispatch }) {
       />
     </Wrapper>
   )
-}
+};
 
 const MainLayoutConnect = connect((store) => {
+  
   return {
     message: store.messageReducer.message,
     dispatch: store.dispatch,
