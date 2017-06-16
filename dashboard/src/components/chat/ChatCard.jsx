@@ -10,15 +10,12 @@ import { compose, withHandlers, withState } from 'recompose';
 import io from 'socket.io-client';
 import { messageHandler } from './redux/reducers';
 import { setMessage } from './redux/actions';
-import { messageStore } from './redux/store';
+import { store } from './redux/store';
+import { connect } from 'react-redux';
 
 const socket = io()
-//const chatMessages = ["hi"];
-messageStore.dispatch(setMessage('a'))
-console.log(messageStore.getState())
-messageHandler('', setMessage("test"))
-console.log(messageStore.getState())
-const ChatCard = function ChatCard({ sendMessage, chatMessages, message, setMessageC }) {
+
+const ChatCard = function ChatCard({ sendMessage, chatMessages, dispatch, message, setMessageC }) {
 
   return(
     <Card
@@ -33,7 +30,7 @@ const ChatCard = function ChatCard({ sendMessage, chatMessages, message, setMess
           placeholder="Send message"
           className="width__75"
           value={message}
-          onChange={(e) => setMessageC(e.target.value)}
+          onChange={(e) => dispatch(setMessage(e.target.value))}
         />
         <Button
           type="primary"
@@ -49,21 +46,18 @@ const ChatCard = function ChatCard({ sendMessage, chatMessages, message, setMess
 
 const ChatCardContainer = compose(
   //USING STATE WITH COMPOSE INSTEAD OF REDUX
-  withState('message','setMessageC', ''),
   withState('chatMessages', 'setChatMessages', []),
   withHandlers({
-    sendMessage: ({ chatMessages, setChatMessages, setMessageC, message }) => (e) => {
+    sendMessage: ({ chatMessages, setChatMessages, dispatch, message }) => (e) => {
       e.preventDefault();
-      console.log(messageStore.getState())
       socket.emit('chat message', message);
       socket.on('chat message', (msg) => {
-        console.log(msg)
-        const asd = chatMessages.slice()
-        asd.push(msg)
-        setChatMessages(asd)
-        console.log(chatMessages)
-        messageStore.dispatch(setMessage(''))
-        setMessageC('')
+
+        //UPDATE CHATMESSAGE STATE TO DISPLAY NEW MESSAGES
+        const updateChatMessages = chatMessages.slice()
+        updateChatMessages.push(msg)
+        setChatMessages(updateChatMessages)
+        dispatch(setMessage(''))
         return false;
       })
     }

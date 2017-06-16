@@ -1,4 +1,4 @@
 import { createStore } from 'redux'
 import { messageHandler } from './reducers'
 
-export let messageStore = createStore(messageHandler)
+export const store = createStore(messageHandler, { message: 'test', alt: "asd" })
