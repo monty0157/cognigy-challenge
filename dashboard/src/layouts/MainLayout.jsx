@@ -1,16 +1,17 @@
 import React from 'react';
 import Wrapper from '../components/Wrapper';
-import ChatCard from '../components/chat/ChatCard';
+import ChatCardContainer from '../components/chat/ChatCard';
 import { connect } from 'react-redux';
 
 import { setMessage } from '../components/chat/redux/actions';
 
-const MainLayout = function MainLayout({ message, dispatch }) {
+const MainLayout = function MainLayout({ message, dispatch, chatMessages }) {
 
   return (
     <Wrapper>
-      <ChatCard
+      <ChatCardContainer
         message={message}
+        chatMessages={chatMessages}
         dispatch={dispatch}
       />
     </Wrapper>
@@ -18,9 +19,10 @@ const MainLayout = function MainLayout({ message, dispatch }) {
 };
 
 const MainLayoutConnect = connect((store) => {
-  
+
   return {
     message: store.messageReducer.message,
+    chatMessages: store.messageReducer.chatMessages,
     dispatch: store.dispatch,
   };
 })(MainLayout);

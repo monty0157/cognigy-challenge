@@ -1,7 +1,9 @@
 import { SET_MESSAGE } from './actions'
+import { SET_CHATMESSAGES } from './actions'
 
 const initialState = {
   message: '',
+  chatMessages: [],
 }
 
 export function messageReducer(state = initialState, action) {
@@ -11,6 +13,12 @@ export function messageReducer(state = initialState, action) {
       return {
         ...state,
         message: action.message
+      };
+
+    case SET_CHATMESSAGES:
+      return {
+        ...state,
+        chatMessages: action.chatMessages
       };
 
     default:

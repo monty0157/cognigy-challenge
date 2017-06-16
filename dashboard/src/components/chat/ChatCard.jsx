@@ -10,7 +10,7 @@ import { connect } from 'react-redux';
 import io from 'socket.io-client';
 
 import Chat from './Chat';
-import { setMessage } from './redux/actions';
+import { setMessage, setChatMessages } from './redux/actions';
 
 const socket = io()
 
@@ -44,10 +44,8 @@ const ChatCard = function ChatCard({ sendMessage, chatMessages, dispatch, messag
 }
 
 const ChatCardContainer = compose(
-  //USING STATE WITH COMPOSE INSTEAD OF REDUX
-  withState('chatMessages', 'setChatMessages', []),
   withHandlers({
-    sendMessage: ({ chatMessages, setChatMessages, dispatch, message }) => (e) => {
+    sendMessage: ({ chatMessages, dispatch, message }) => (e) => {
       e.preventDefault();
       socket.emit('chat message', message);
       socket.on('chat message', (msg) => {
@@ -55,7 +53,9 @@ const ChatCardContainer = compose(
         //UPDATE CHATMESSAGE STATE TO DISPLAY NEW MESSAGES
         const updateChatMessages = chatMessages.slice()
         updateChatMessages.push(msg)
-        setChatMessages(updateChatMessages)
+        dispatch(setChatMessages(updateChatMessages))
+
+        //CLEAR VALUE OF INPUT FIELD
         dispatch(setMessage(''))
         return false;
       })
