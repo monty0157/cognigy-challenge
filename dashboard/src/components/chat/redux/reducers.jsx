@@ -1,16 +1,17 @@
 import { SET_MESSAGE } from './actions'
 
 const initialState = {
-  message: 'asd',
+  message: '',
 }
 
-export function messageHandler(state = initialState, action) {
+export function messageReducer(state = initialState, action) {
   switch (action.type) {
-    case SET_MESSAGE:
-      return action.text;
 
-    case 't':
-      return action.text;
+    case SET_MESSAGE:
+      return {
+        ...state,
+        message: action.message
+      };
 
     default:
       return state

@@ -6,25 +6,23 @@ import {
   Row,
 } from 'antd';
 import { compose, withHandlers, withState } from 'recompose';
-//import Chat from './Chat';
-import io from 'socket.io-client';
-import { messageHandler } from './redux/reducers';
-import { setMessage } from './redux/actions';
-import { store } from './redux/store';
 import { connect } from 'react-redux';
+import io from 'socket.io-client';
+
+import Chat from './Chat';
+import { setMessage } from './redux/actions';
 
 const socket = io()
 
-const ChatCard = function ChatCard({ sendMessage, chatMessages, dispatch, message, setMessageC }) {
+const ChatCard = function ChatCard({ sendMessage, chatMessages, dispatch, message }) {
 
   return(
     <Card
       title="Chat with this amazing bot"
       className="removeHover w-50"
     >
-      {chatMessages.map((msg) =>
-        <p>{msg}</p>
-      )}
+      <Chat chatMessages={chatMessages} />
+
       <Row>
         <Input
           placeholder="Send message"
