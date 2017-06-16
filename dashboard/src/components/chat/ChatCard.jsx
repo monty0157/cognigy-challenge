@@ -29,6 +29,7 @@ const ChatCard = function ChatCard({ sendMessage, chatMessages, dispatch, messag
           className="width__75"
           value={message}
           onChange={(e) => dispatch(setMessage(e.target.value))}
+          onPressEnter={(e) => sendMessage(e)}
         />
         <Button
           type="primary"
