@@ -16260,6 +16260,9 @@ body {
 .darkBlue {
   background-color: #3f51b5;
 }
+.displayFlex__childUL > ul {
+  display: flex;
+}
 .removeAfter::after {
   display: none;
 }
