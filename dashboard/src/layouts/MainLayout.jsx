@@ -3,10 +3,8 @@ import Wrapper from '../components/Wrapper';
 import ChatCardContainer from '../components/chat/ChatCard';
 import { connect } from 'react-redux';
 
-import { setMessage } from '../components/chat/redux/actions';
-
 const MainLayout = function MainLayout({ message, dispatch, chatMessages }) {
-
+  console.log(chatMessages, '0')
   return (
     <Wrapper>
       <ChatCardContainer
