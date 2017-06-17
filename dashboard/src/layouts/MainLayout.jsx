@@ -2,17 +2,21 @@ import React from 'react';
 import Wrapper from '../components/Wrapper';
 import ChatCardContainer from '../components/chat/ChatCard';
 import { connect } from 'react-redux';
+import TopBar from '../components/TopBar';
 
 const MainLayout = function MainLayout({ message, dispatch, chatMessages }) {
 
   return (
-    <Wrapper>
-      <ChatCardContainer
-        message={message}
-        chatMessages={chatMessages}
-        dispatch={dispatch}
-      />
-    </Wrapper>
+    <div className="h-100">
+      <TopBar />
+      <Wrapper>
+        <ChatCardContainer
+          message={message}
+          chatMessages={chatMessages}
+          dispatch={dispatch}
+        />
+      </Wrapper>
+    </div>
   )
 };
 
