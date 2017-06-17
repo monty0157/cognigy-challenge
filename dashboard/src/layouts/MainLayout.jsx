@@ -4,7 +4,7 @@ import ChatCardContainer from '../components/chat/ChatCard';
 import { connect } from 'react-redux';
 
 const MainLayout = function MainLayout({ message, dispatch, chatMessages }) {
-  console.log(chatMessages, '0')
+
   return (
     <Wrapper>
       <ChatCardContainer
